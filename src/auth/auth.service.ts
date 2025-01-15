@@ -1,13 +1,6 @@
 import { ConfirmRequestDto } from './dto/confirm.request.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {
-  AuthenticationDetails,
-  CognitoUser,
-  CognitoUserPool,
-  CognitoUserAttribute,
-  CognitoRefreshToken,
-} from 'amazon-cognito-identity-js';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import {
@@ -22,17 +15,11 @@ import {
 
 @Injectable()
 export class AuthService {
-  private userPool: CognitoUserPool;
   private readonly client: CognitoIdentityProviderClient;
   private readonly clientId: string;
   private readonly userPoolId: string;
 
   constructor(private configService: ConfigService) {
-    this.userPool = new CognitoUserPool({
-      UserPoolId: this.configService.get<string>('userPoolId'),
-      ClientId: this.configService.get<string>('clientId'),
-    });
-
     // Initialize the AWS Cognito client
     this.client = new CognitoIdentityProviderClient({
       region: process.env.AWS_COGNITO_REGION,
