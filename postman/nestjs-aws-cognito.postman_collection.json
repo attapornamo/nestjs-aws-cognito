@@ -95,6 +95,35 @@
 			"response": []
 		},
 		{
+			"name": "send-reset-link",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"attaporn11@yahoo.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/send-reset-link",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"send-reset-link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "refresh",
 			"request": {
 				"method": "POST",

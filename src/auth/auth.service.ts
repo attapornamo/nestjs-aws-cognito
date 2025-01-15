@@ -18,6 +18,7 @@ import {
   SignUpCommand,
   ConfirmSignUpCommand,
   AdminDeleteUserCommand,
+  ForgotPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 
 @Injectable()
@@ -134,6 +135,27 @@ export class AuthService {
         return false;
       }
 
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async sendResetLink(email: string): Promise<string> {
+    const params = {
+      ClientId: this.clientId,
+      SecretHash: this.cognitoSecretHash(email),
+      Username: email,
+    };
+
+    try {
+      const command = new ForgotPasswordCommand(params);
+      await this.client.send(command);
+      return 'Reset link has been sent'; // Indicates success
+    } catch (error) {
+      if (error.name === 'CodeDeliveryFailureException') {
+        return 'CodeDeliveryFailure';
+      }
+
+      // Handle other exceptions
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

@@ -51,6 +51,15 @@ export class AuthController {
     }
   }
 
+  @Post('send-reset-link')
+  async sendResetLink(@Body() data: any) {
+    try {
+      return await this.authService.sendResetLink(data.email);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
   @Delete('user')
   async delete(@Body() authenticateRequest: AuthenticateRequestDto) {
     try {
