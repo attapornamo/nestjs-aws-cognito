@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { ConfirmRequestDto } from './dto/confirm.request.dto';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
+import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -45,6 +46,17 @@ export class AuthController {
   async sendResetLink(@Body() data: any) {
     try {
       return await this.authService.sendResetLink(data.email);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('change-password')
+  async changePassword(
+    @Body() changePasswordRequest: ChangePasswordRequestDto,
+  ) {
+    try {
+      return await this.authService.changePassword(changePasswordRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
