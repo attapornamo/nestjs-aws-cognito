@@ -12,6 +12,7 @@ import {
   AdminDeleteUserCommand,
   ForgotPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -110,7 +111,7 @@ export class AuthService {
 
     try {
       const command = new ConfirmSignUpCommand(params);
-      const response = await this.client.send(command);
+      await this.client.send(command);
 
       return true;
     } catch (error) {
@@ -154,7 +155,7 @@ export class AuthService {
 
     try {
       const command = new AdminDeleteUserCommand(params);
-      const response = await this.client.send(command);
+      await this.client.send(command);
 
       return true;
     } catch (error) {
@@ -190,7 +191,6 @@ export class AuthService {
    * Generate the SECRET_HASH for AWS Cognito.
    */
   private cognitoSecretHash(username: string): string {
-    const crypto = require('crypto');
     const secret = process.env.AWS_COGNITO_CLIENT_SECRET;
     const message = username + this.clientId;
 
