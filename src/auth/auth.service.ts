@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
+import { GetUserRequestDto } from './dto/getuser.request.dto';
 import {
   CognitoIdentityProviderClient,
   AdminInitiateAuthCommand,
@@ -13,6 +14,7 @@ import {
   AdminDeleteUserCommand,
   ForgotPasswordCommand,
   ChangePasswordCommand,
+  GetUserCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
@@ -163,6 +165,28 @@ export class AuthService {
     } catch (error) {
       if (error.name === 'InvalidPasswordException') {
         return 'InvalidPasswordException';
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getUser(getUser: GetUserRequestDto) {
+    const params = {
+      AccessToken: getUser.access_token,
+    };
+
+    try {
+      const command = new GetUserCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name === 'InvalidParameterException') {
+        return 'InvalidParameterException';
+      }
+      if (error.name === 'NotAuthorizedException') {
+        return 'NotAuthorizedException';
       }
 
       // Handle other exceptions

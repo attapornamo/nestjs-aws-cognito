@@ -4,12 +4,14 @@ import {
   Controller,
   Delete,
   Post,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ConfirmRequestDto } from './dto/confirm.request.dto';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
+import { GetUserRequestDto } from './dto/getuser.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -57,6 +59,15 @@ export class AuthController {
   ) {
     try {
       return await this.authService.changePassword(changePasswordRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Get('get-user')
+  async getUser(@Body() getUserRequest: GetUserRequestDto) {
+    try {
+      return await this.authService.getUser(getUserRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
