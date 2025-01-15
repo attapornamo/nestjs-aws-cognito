@@ -19,7 +19,7 @@ npm install
 ```
 
 ## 4. Compile Env
-Rename .env.template to .env and compile with Cognito auth data.
+Rename .env.txt to .env and compile with Cognito auth data.
 
 ## 5. Build & Run
 ```
