@@ -1,4 +1,3 @@
-import { RefreshRequestDto } from './dto/refresh.request.dto';
 import { ConfirmRequestDto } from './dto/confirm.request.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -209,30 +208,5 @@ export class AuthService {
     const message = username + this.clientId;
 
     return crypto.createHmac('sha256', secret).update(message).digest('base64');
-  }
-
-  refreshToken(refreshData: RefreshRequestDto) {
-    const { email, refreshToken } = refreshData;
-
-    const RefreshToken = new CognitoRefreshToken({
-      RefreshToken: refreshToken,
-    });
-
-    const userData = {
-      Username: email,
-      Pool: this.userPool,
-    };
-
-    const cognitoUser = new CognitoUser(userData);
-
-    return new Promise((resolve, reject) => {
-      return cognitoUser.refreshSession(RefreshToken, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
   }
 }

@@ -124,35 +124,6 @@
 			"response": []
 		},
 		{
-			"name": "refresh",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"attaporn11@yahoo.com\",\r\n    \"refreshToken\": \"eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.PYdQKaQ_UyV7mHOxqDhy4XHKtl2iTMob6Dy0KGwAmpPuNdjW_Va6_DuOtkHpZ34tbF4QI1Wdu8Cmkp2SfPYATZu2MD0M01HGXVbUj5LpsRvVjVwNBKIlozn11oAQLGN7gT15-fwUw5OWzzwpSxnTGJEGfLE2yH42ZfkNRHr7iByphqjrbQJ7lC8MxxtVWB3hj5Dp3wxOpJw1agmV3-0su05jgdUodQ5HIvTVjsTuyXmC1cAanTLYKFfle1OnS4GW1ZhKrsjw8CdD9GM5NTYdKiDl7lkr306c43416rc1ghOa8ZH2CL5dXWZN-819kTgSCeq1GoXi41ldb32tZUxVPA.LN0jKF4ckxJydHTR.mctdHgkh-i8Y2u0s4iYnhKKsyOEA40IIEfYW0ZLxJ_YFBduSr3yRHCawZj6xkBS8VoUtMLbof_JQOsKDj9qjnvsY-oI70-cYitbJdqw3sf7naS4QMdTuvguPC0PQkNaKFYEC7Q8sjafNCP3mJUnT3vEFH9XOYWo8llgQjnfOxmH-lTxk0C0MHdK3z0G5DCxG-lAUaS9BWe0eZdTA98MzM6tzaKVPajBX-U-qI9CWmWREXytCDt5b2GPnHatur8rEpD_JOSpkTI_QzZcAZd5itubNObX4YRMpTovkdyAQOzSXD0JgdlPyDiIab25kLkw-ErAK42ifpF8j-w2XXi8axHTb-9PylzusH74-1-9_wZzvF2a2r_hlkiNzPRWlFblNMcvHFUZ4dXpSf6JsrW3P0oORThIqhsVVALKtEZbOI4NKKUl3o8ViaCTiaeldLA7mZUBYd3dPBr9n5skDuBxR9ewzr7ygr5XHXOeSvdoHNw0PodFcNLSv9w0efhJ4H85KSN1a6zCUPxR-H5_DsBrl4hLWH1OM42y1wUfFt8HyewjYx9Pdpw3w46HoaKqh7n2M1NUesisjTEYss87A2PAx1MAQQq5Q72ftCTBD1Y_QptBAx1e6WgET-4DuZi9ceMKNVslGea87fyW_WO-tFK3b-hRBLWXzi8WHLZfmjbFmUyynG4ZxwC3iN0e13vNk9_eDLXVlbvAC2z4lOfysYfuLX_CKGK_9IdxBZX5JHP65qwrj_X_woz-KZCnH0Ub6CCexni9ZYfaUeE4V_AiniTbOn79F7MGoDYG4j7SinY6vZ7Vhb14vy6l5cSSLy1jRkDS6z_Eb_20gjGvLB3i_AnLRNUXZFTLPuxSZZC8BoFUq88aIy661QmeLp5KsulnbLrfy5oW6au7l7JKjGsfCYm9VR0UkmZ1C0Mrwp-lkalOeKKDFNKgWxIaozotd7c5xSCUxF0YKfNvsOn28Q-jvqUMtCk899wl_-YtRyYXwGKCgZT_XsAtKKRnQOfjIWP2u3yhLPTj3_jpbi7eXGgWk-y1op7OCq0VgPto0f14N9nZMdBaDcxBsVfuD6ON_tOMmina1HFsXcmTfsTWvzz27tD8HJWK5eQU0wiUO0aAE3Jj3oyQaGsnv858UbKdRstLB8RLDk8IzvaqsWLV_HOyfOTEkl72eMOvBWBTA1CLjj7FKs5JxGSHB0PI0_VX_fE24Ejn4KocSalxoj9GTjo55smZVXaEFKcdPNBXaxwHq-MXzmJyx0la34zv2v5iH8si5_1TaIp-QJgw28ZHXcsVahnbRZ65GWjQB1vfRLZCkVmWckVHk06G4wxJVwCmyMd1TbJ-X-idpa16AJ8T0.Ta89LcYccRNaTkldc4NpNQ\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/auth/refresh",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"auth",
-						"refresh"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "delete",
 			"request": {
 				"method": "DELETE",
