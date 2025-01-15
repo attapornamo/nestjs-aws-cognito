@@ -124,6 +124,35 @@
 			"response": []
 		},
 		{
+			"name": "change-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"access_token\": \"eyJraWQiOiIrWHpaSndSbU9aUlhMZGNBcHdYNHVaTHJ1ZjVRa2VZaGRlVmY4SzVZN2FrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJkOThhNTUxYy05MDIxLTcwM2MtMTFhZC0yZTA1MmRmZWQ3MDAiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfRlNxTVFaWHJiIiwiY2xpZW50X2lkIjoiNThjNjdjOGxqbHVzYmM2ZTE3OTBycmI4dmsiLCJvcmlnaW5fanRpIjoiMTY2YmU4MTEtNzQ3Yi00NjNkLWJkMzktNjNhODNiY2U5N2RkIiwiZXZlbnRfaWQiOiI5NmZhODUzZi1kNGYxLTQ5ZmEtYjllZS1lODk3OWU3MDVjZWUiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzM2OTMwNzcyLCJleHAiOjE3MzY5MzQzNzIsImlhdCI6MTczNjkzMDc3MiwianRpIjoiODQ3M2NhNWItZTg0MC00NTNlLWFlMTAtZWVlNzE2NTFiODhkIiwidXNlcm5hbWUiOiJkOThhNTUxYy05MDIxLTcwM2MtMTFhZC0yZTA1MmRmZWQ3MDAifQ.OTPkSeAK49XMiBHjJCmBZdppTFc_C2yeHlN-jrX6D25KdYbLj-zx1_iqkITyWkkRazVY_ztjU3asoRv3dJ6vYpzPUAPPGg8UzdA0rOqwTQiS811B_wOBO9GF9gN-fG_09UQXSrT81loaOvrDFxa7zWBrliNz9NaMshfR5ycAjfqVLw2WwWfAUiuNEnG4a6FogyT4I4we5m5lbZwejntAC1CH7zK2xlTzMK9EJV7dAQje5efVm5LqI7ad2n68MfnN_kaxzUAYpP6YO8r_N86Pyx7nRks66GeiQN-bLfa_GZ7g9BSCmxQtnZokrKFt_wJh9x9E__VuO5p80fDXVxSo_A\",\r\n    \"previous_password\": \"User1919@\",\r\n    \"proposed_password\": \"User1919!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "delete",
 			"request": {
 				"method": "DELETE",
