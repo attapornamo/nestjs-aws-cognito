@@ -10,10 +10,10 @@ import authconfig from './auth/auth.config';
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [authconfig]
+      load: [authconfig],
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
