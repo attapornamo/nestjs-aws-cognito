@@ -34,6 +34,7 @@ Contains the following route:
 - auth/login --> Login user
 - auth/register --> Register user
 - auth/confirm --> Confirm user with email or sms code
+- auth/resend-confirmation-code --> Resend confirmation code
 - auth/send-reset-link --> Send reset link
 - auth/change-password --> Change password
 - auth/admin-create-user --> Admin create user
