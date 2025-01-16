@@ -5,16 +5,19 @@ import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
 import { GetUserRequestDto } from './dto/getuser.request.dto';
+import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
+import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 import {
   CognitoIdentityProviderClient,
   AdminInitiateAuthCommand,
-  CognitoIdentityProviderServiceException,
   SignUpCommand,
   ConfirmSignUpCommand,
   AdminDeleteUserCommand,
   ForgotPasswordCommand,
   ChangePasswordCommand,
   GetUserCommand,
+  AdminCreateUserCommand,
+  ResendConfirmationCodeCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
@@ -55,14 +58,8 @@ export class AuthService {
 
       return response;
     } catch (error) {
-      if (error instanceof CognitoIdentityProviderServiceException) {
-        // Handle specific AWS Cognito error codes
-        if (
-          error.name === 'ResetRequiredException' || // Equivalent to RESET_REQUIRED
-          error.name === 'UserNotFoundException' // Equivalent to USER_NOT_FOUND
-        ) {
-          return false;
-        }
+      if (error.name !== '') {
+        return error.name;
       }
 
       // Rethrow any other exceptions
@@ -97,8 +94,8 @@ export class AuthService {
 
       return 'UserConfirmed: ' + response.UserConfirmed || false;
     } catch (error) {
-      if (error.name === 'UsernameExistsException') {
-        return false;
+      if (error.name !== '') {
+        return error.name;
       }
 
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -119,11 +116,34 @@ export class AuthService {
 
       return true;
     } catch (error) {
-      if (error.name === 'CodeMismatchException') {
-        return false;
+      if (error.name !== '') {
+        return error.name;
       }
-      if (error.name === 'ExpiredCodeException') {
-        return false;
+
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async resendConfirmationCode(
+    resendConfirmationCode: ResendConfirmationCodeRequestDto,
+  ) {
+    // Generate the SECRET_HASH
+    const secretHash = this.cognitoSecretHash(resendConfirmationCode.email);
+
+    const params = {
+      ClientId: this.clientId,
+      Username: resendConfirmationCode.email,
+      SecretHash: secretHash,
+    };
+
+    try {
+      const command = new ResendConfirmationCodeCommand(params);
+      const response = await this.client.send(command);
+
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
       }
 
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -142,8 +162,8 @@ export class AuthService {
       await this.client.send(command);
       return 'Reset link has been sent'; // Indicates success
     } catch (error) {
-      if (error.name === 'CodeDeliveryFailureException') {
-        return 'CodeDeliveryFailure';
+      if (error.name !== '') {
+        return error.name;
       }
 
       // Handle other exceptions
@@ -163,8 +183,28 @@ export class AuthService {
       await this.client.send(command);
       return 'Change password sucessfully';
     } catch (error) {
-      if (error.name === 'InvalidPasswordException') {
-        return 'InvalidPasswordException';
+      if (error.name !== '') {
+        return error.name;
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async adminCreateUser(adminCreateUser: AdminCreateUserRequestDto) {
+    const params = {
+      UserPoolId: this.userPoolId,
+      Username: adminCreateUser.email,
+    };
+
+    try {
+      const command = new AdminCreateUserCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
       }
 
       // Handle other exceptions
@@ -182,11 +222,8 @@ export class AuthService {
       const response = await this.client.send(command);
       return response;
     } catch (error) {
-      if (error.name === 'InvalidParameterException') {
-        return 'InvalidParameterException';
-      }
-      if (error.name === 'NotAuthorizedException') {
-        return 'NotAuthorizedException';
+      if (error.name !== '') {
+        return error.name;
       }
 
       // Handle other exceptions
@@ -206,11 +243,8 @@ export class AuthService {
 
       return true;
     } catch (error) {
-      if (error.name === 'InvalidParameterException') {
-        return false;
-      }
-      if (error.name === 'NotAuthorizedException') {
-        return false;
+      if (error.name !== '') {
+        return error.name;
       }
 
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);

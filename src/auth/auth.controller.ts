@@ -12,6 +12,8 @@ import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
 import { GetUserRequestDto } from './dto/getuser.request.dto';
+import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
+import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -44,6 +46,19 @@ export class AuthController {
     }
   }
 
+  @Post('resend-confirmation-code')
+  async resendConfirmationCode(
+    @Body() resendConfirmationCodeRequest: ResendConfirmationCodeRequestDto,
+  ) {
+    try {
+      return await this.authService.resendConfirmationCode(
+        resendConfirmationCodeRequest,
+      );
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
   @Post('send-reset-link')
   async sendResetLink(@Body() data: any) {
     try {
@@ -59,6 +74,17 @@ export class AuthController {
   ) {
     try {
       return await this.authService.changePassword(changePasswordRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('admin-create-user')
+  async adminCreateUser(
+    @Body() adminCreateUserRequest: AdminCreateUserRequestDto,
+  ) {
+    try {
+      return await this.authService.adminCreateUser(adminCreateUserRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
