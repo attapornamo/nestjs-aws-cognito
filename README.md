@@ -31,11 +31,12 @@ npm run start
 This is a Nestjs application to test Cognito authentication. 
 </br>
 Contains the following route:
-- auth/login --> Login user
-- auth/register --> Register user
-- auth/confirm --> Confirm user with email or sms code
+- auth/login --> Login
+- auth/signup --> Signup
+- auth/confirm-signup --> Confirm signup with email or sms code
 - auth/resend-confirmation-code --> Resend confirmation code
-- auth/send-reset-link --> Send reset password link
+- auth/forgot-password --> Forgot password
+- auth/confirm-forgot-password --> Confirm forgot password
 - auth/change-password --> Change password
 - auth/admin-create-user --> Admin create user
 - auth/get-user --> Get user

@@ -7,13 +7,14 @@ import {
   Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ConfirmRequestDto } from './dto/confirm.request.dto';
+import { ConfirmSignupRequestDto } from './dto/confirmsignup.request.dto';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
-import { RegisterRequestDto } from './dto/register.request.dto';
+import { SignupRequestDto } from './dto/signup.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
 import { GetUserRequestDto } from './dto/getuser.request.dto';
 import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
+import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -28,19 +29,19 @@ export class AuthController {
     }
   }
 
-  @Post('register')
-  async register(@Body() registerRequest: RegisterRequestDto) {
+  @Post('signup')
+  async signup(@Body() signupRequest: SignupRequestDto) {
     try {
-      return await this.authService.register(registerRequest);
+      return await this.authService.signup(signupRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
   }
 
-  @Post('confirm')
-  async confirm(@Body() confirmRequest: ConfirmRequestDto) {
+  @Post('confirm-signup')
+  async confirmSignup(@Body() confirmSignupRequest: ConfirmSignupRequestDto) {
     try {
-      return await this.authService.confirm(confirmRequest);
+      return await this.authService.confirmSignup(confirmSignupRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
@@ -59,10 +60,23 @@ export class AuthController {
     }
   }
 
-  @Post('send-reset-link')
-  async sendResetLink(@Body() data: any) {
+  @Post('forgot-password')
+  async forgotPassword(@Body() data: any) {
     try {
-      return await this.authService.sendResetLink(data.email);
+      return await this.authService.forgotPassword(data.email);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('confirm-forgot-password')
+  async confirmForgotPassword(
+    @Body() confirmForgotPassword: ConfirmForgotPasswordRequestDto,
+  ) {
+    try {
+      return await this.authService.confirmForgotPassword(
+        confirmForgotPassword,
+      );
     } catch (e) {
       throw new BadRequestException(e.message);
     }

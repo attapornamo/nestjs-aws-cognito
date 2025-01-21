@@ -1,12 +1,13 @@
-import { ConfirmRequestDto } from './dto/confirm.request.dto';
+import { ConfirmSignupRequestDto } from './dto/confirmsignup.request.dto';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthenticateRequestDto } from './dto/authenticate.request.dto';
-import { RegisterRequestDto } from './dto/register.request.dto';
+import { SignupRequestDto } from './dto/signup.request.dto';
 import { ChangePasswordRequestDto } from './dto/changepassword.request.dto';
 import { GetUserRequestDto } from './dto/getuser.request.dto';
 import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
+import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 import {
   CognitoIdentityProviderClient,
   AdminInitiateAuthCommand,
@@ -18,6 +19,7 @@ import {
   GetUserCommand,
   AdminCreateUserCommand,
   ResendConfirmationCodeCommand,
+  ConfirmForgotPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
@@ -67,19 +69,19 @@ export class AuthService {
     }
   }
 
-  async register(
-    registerRequest: RegisterRequestDto,
+  async signup(
+    signupRequest: SignupRequestDto,
     attributes: Record<string, string> = {},
   ) {
-    attributes.email = registerRequest.email;
+    attributes.email = signupRequest.email;
 
     const formattedAttributes = this.formatAttributes(attributes);
 
     const params = {
       ClientId: this.clientId,
-      Username: registerRequest.email,
-      Password: registerRequest.password,
-      SecretHash: this.cognitoSecretHash(registerRequest.email),
+      Username: signupRequest.email,
+      Password: signupRequest.password,
+      SecretHash: this.cognitoSecretHash(signupRequest.email),
       UserAttributes: formattedAttributes,
     };
 
@@ -88,7 +90,7 @@ export class AuthService {
       const response = await this.client.send(command);
 
       // Mark the user as email verified
-      await this.setUserAttributes(registerRequest.email, {
+      await this.setUserAttributes(signupRequest.email, {
         email_verified: 'true',
       });
 
@@ -102,12 +104,12 @@ export class AuthService {
     }
   }
 
-  async confirm(confirm: ConfirmRequestDto) {
+  async confirmSignup(confirmSignup: ConfirmSignupRequestDto) {
     const params = {
       ClientId: this.clientId,
-      Username: confirm.email,
-      ConfirmationCode: confirm.code,
-      SecretHash: this.cognitoSecretHash(confirm.email),
+      Username: confirmSignup.email,
+      ConfirmationCode: confirmSignup.code,
+      SecretHash: this.cognitoSecretHash(confirmSignup.email),
     };
 
     try {
@@ -150,7 +152,7 @@ export class AuthService {
     }
   }
 
-  async sendResetLink(email: string): Promise<string> {
+  async forgotPassword(email: string): Promise<string> {
     const params = {
       ClientId: this.clientId,
       SecretHash: this.cognitoSecretHash(email),
@@ -160,10 +162,35 @@ export class AuthService {
     try {
       const command = new ForgotPasswordCommand(params);
       await this.client.send(command);
-      return 'Reset link has been sent'; // Indicates success
+      return 'Reset code has been sent'; // Indicates success
     } catch (error) {
       if (error.name !== '') {
         return error.name;
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async confirmForgotPassword(
+    confirmForgotPassword: ConfirmForgotPasswordRequestDto,
+  ) {
+    const params = {
+      ClientId: this.clientId,
+      Username: confirmForgotPassword.email,
+      ConfirmationCode: confirmForgotPassword.code,
+      Password: confirmForgotPassword.password,
+      SecretHash: this.cognitoSecretHash(confirmForgotPassword.email),
+    };
+
+    try {
+      const command = new ConfirmForgotPasswordCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error;
       }
 
       // Handle other exceptions

@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"opselfservice@gmail.com\",\r\n    \"password\": \"\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,13 +37,13 @@
 			"response": []
 		},
 		{
-			"name": "register",
+			"name": "signup",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"opselfservice@gmail.com\",\r\n    \"password\": \"\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -51,7 +51,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/auth/register",
+					"raw": "http://localhost:3000/auth/signup",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -59,20 +59,20 @@
 					"port": "3000",
 					"path": [
 						"auth",
-						"register"
+						"signup"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "confirm",
+			"name": "confirm-signup",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"opselfservice@gmail.com\",\r\n    \"code\": \"007882\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"code\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,7 +80,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/auth/confirm",
+					"raw": "http://localhost:3000/auth/confirm-signup",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -88,7 +88,7 @@
 					"port": "3000",
 					"path": [
 						"auth",
-						"confirm"
+						"confirm-signup"
 					]
 				}
 			},
@@ -101,7 +101,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"siriporntha99@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,13 +124,13 @@
 			"response": []
 		},
 		{
-			"name": "send-reset-link",
+			"name": "forgot-password",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"opselfservice@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,7 +138,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/auth/send-reset-link",
+					"raw": "http://localhost:3000/auth/forgot-password",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -146,7 +146,36 @@
 					"port": "3000",
 					"path": [
 						"auth",
-						"send-reset-link"
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirm-forgot-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"code\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/confirm-forgot-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"confirm-forgot-password"
 					]
 				}
 			},
@@ -159,7 +188,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"access_token\": \"eyJraWQiOiIrWHpaSndSbU9aUlhMZGNBcHdYNHVaTHJ1ZjVRa2VZaGRlVmY4SzVZN2FrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlOThhMzViYy0xMDIxLTcwOTgtNGRlNS1iNWVkZTU5ZjJkODMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfRlNxTVFaWHJiIiwiY2xpZW50X2lkIjoiNThjNjdjOGxqbHVzYmM2ZTE3OTBycmI4dmsiLCJvcmlnaW5fanRpIjoiMGNhOWYxZjQtZmQ0My00MjNlLWIyMDgtOGRkNTZkY2M0NzA4IiwiZXZlbnRfaWQiOiI1NmNjOWNkZi1hNDU3LTRjZTQtYTJiZS0wYjQzNjA1MGVkZTciLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzM2OTM2MTE2LCJleHAiOjE3MzY5Mzk3MTUsImlhdCI6MTczNjkzNjExNiwianRpIjoiN2I5ZjA0MzMtOWI5OC00NTMzLTg5ZmItMzU0MzM0YzA3N2M1IiwidXNlcm5hbWUiOiJlOThhMzViYy0xMDIxLTcwOTgtNGRlNS1iNWVkZTU5ZjJkODMifQ.TymnXmeOVkLiqIAdjNUlLieGS6Fy526VJJMdOyGJDHX7HZPUXE3e4uV1C2Dt_OMD_OJYchHanPe7BoHTjMqyGdxSmrxUUaDWGL0s-98JvBCnLdz7MX5VJudQ3lCXJ21S7kNvpO4YYItnVjot_GcSSMV15lhDYjle7rLWnKyAg_CHjfUxWg1XTMImJb86WIokvMzWywjlVUwUE98pLSn63K5eZTyTPzlEvdvRprKI_vremESbBeB_Ujp5ptZd8Q2FVjxbaoNrpF0yFrKlCug7_SQMil8g_RvDFBZeWr1dVCTVDnRLAnfNL5gQGK_42pBN_Gaia0unDmU-k5L9RZ-8aQ\",\r\n    \"previous_password\": \"AdminOPS1#\",\r\n    \"proposed_password\": \"AdminOPS2#\"\r\n}",
+					"raw": "{\r\n    \"access_token\": \"\",\r\n    \"previous_password\": \"\",\r\n    \"proposed_password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,7 +217,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"siriporntha99@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -220,7 +249,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"access_token\": \"eyJraWQiOiIrWHpaSndSbU9aUlhMZGNBcHdYNHVaTHJ1ZjVRa2VZaGRlVmY4SzVZN2FrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJlOThhMzViYy0xMDIxLTcwOTgtNGRlNS1iNWVkZTU5ZjJkODMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfRlNxTVFaWHJiIiwiY2xpZW50X2lkIjoiNThjNjdjOGxqbHVzYmM2ZTE3OTBycmI4dmsiLCJvcmlnaW5fanRpIjoiZDQyODYxNGMtNzg4NS00YTVlLWJiNWEtMDhlNDNmZTNkOTkwIiwiZXZlbnRfaWQiOiI5YWYxMjYwNy1jMWRlLTQyYjctYjc3Zi1hNjI2MjM4MGZmZmMiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzM2OTM3OTIxLCJleHAiOjE3MzY5NDE1MjEsImlhdCI6MTczNjkzNzkyMSwianRpIjoiOTA4MDdkNDAtM2RmNy00MDAxLWI3ODctZWJiOTQwN2M0MDQwIiwidXNlcm5hbWUiOiJlOThhMzViYy0xMDIxLTcwOTgtNGRlNS1iNWVkZTU5ZjJkODMifQ.KAnIVm0S1yh96xLhytNK6AXvDv8BDI2athKsNZoyySXaQRjntg_HJX3AiMGHL5TdwlRQkx12Nu7sLB7ipiNLJ89BMq00T3CAYuJqKm6QLwdef_dj9K06mp3JULA0fY3Mkq1gwdYOYEgB69zZO2XjNluL51rrpEtR7VsNAdgL83RRnGse0iabNjx9YFIFcGRxuOx5zclLf9xny6J0-UK-53l2iy0WRT73q_1_kUq3dd9fa2htjNC4RrxINoCAQOd6fwM--F84bghCAXThNP9RnL1RzeE5pizThpwQitLXYjxq4kQzutabdOhPwrd3pHc8QF3Yq86U_-kgbNb9mhyDoQ\"\r\n}",
+					"raw": "{\r\n    \"access_token\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -249,7 +278,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"opselfservice@gmail.com\",\r\n    \"password\": \"\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
