@@ -26,6 +26,8 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
+type MessageActionType = 'RESEND' | 'SUPPRESS';
+
 @Injectable()
 export class AuthService {
   private readonly client: CognitoIdentityProviderClient;
@@ -226,6 +228,7 @@ export class AuthService {
     const params = {
       UserPoolId: this.userPoolId,
       Username: adminCreateUser.email,
+      MessageAction: adminCreateUser.message_action as MessageActionType,
     };
 
     try {
