@@ -217,7 +217,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\"\r\n    //\"message_action\": \"RESEND\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
