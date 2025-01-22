@@ -16,6 +16,7 @@ import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
+import { ListUsersRequestDto } from './dto/listusers.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -111,6 +112,15 @@ export class AuthController {
   ) {
     try {
       return await this.authService.adminDeleteUser(adminDeleteUserRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Get('list-users')
+  async listUsers(@Body() listUsersRequest: ListUsersRequestDto) {
+    try {
+      return await this.authService.listUsers(listUsersRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }

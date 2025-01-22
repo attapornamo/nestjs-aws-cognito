@@ -9,6 +9,7 @@ import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
+import { ListUsersRequestDto } from './dto/listusers.request.dto';
 import {
   CognitoIdentityProviderClient,
   AdminInitiateAuthCommand,
@@ -21,6 +22,7 @@ import {
   AdminCreateUserCommand,
   ResendConfirmationCodeCommand,
   ConfirmForgotPasswordCommand,
+  ListUsersCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
@@ -248,6 +250,29 @@ export class AuthService {
 
     try {
       const command = new AdminDeleteUserCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async listUsers(listUsers: ListUsersRequestDto) {
+    const params = {
+      UserPoolId: this.userPoolId,
+      AttributesToGet: listUsers.attributes,
+      Filter: listUsers.filter,
+      Limit: listUsers.limit,
+      PaginationToken: listUsers.pagination_token,
+    };
+
+    try {
+      const command = new ListUsersCommand(params);
       const response = await this.client.send(command);
       return response;
     } catch (error) {

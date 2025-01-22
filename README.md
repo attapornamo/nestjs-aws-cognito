@@ -40,6 +40,7 @@ Contains the following route:
 - auth/change-password --> Change password
 - auth/admin-create-user --> Admin create user
 - auth/admin-delete-user --> Admin delete user
+- auth/list-users --> List users
 - auth/get-user --> Get user
 - auth/user --> Delete user
 
