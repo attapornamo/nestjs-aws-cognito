@@ -7,7 +7,7 @@
 </br>
 ## 1. Prerequisites
 - NodeJs 12+
-- Aws Accont
+- Aws Account
 
 ## 2. COGNITO: Create user group
 In Cognito service, create a new User Group Pool.</br>
