@@ -15,6 +15,7 @@ import { GetUserRequestDto } from './dto/getuser.request.dto';
 import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
+import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -99,6 +100,17 @@ export class AuthController {
   ) {
     try {
       return await this.authService.adminCreateUser(adminCreateUserRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('admin-delete-user')
+  async adminDeleteUser(
+    @Body() adminDeleteUserRequest: AdminDeleteUserRequestDto,
+  ) {
+    try {
+      return await this.authService.adminDeleteUser(adminDeleteUserRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }

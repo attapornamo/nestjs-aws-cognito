@@ -39,6 +39,7 @@ Contains the following route:
 - auth/confirm-forgot-password --> Confirm forgot password
 - auth/change-password --> Change password
 - auth/admin-create-user --> Admin create user
+- auth/admin-delete-user --> Admin delete user
 - auth/get-user --> Get user
 - auth/user --> Delete user
 

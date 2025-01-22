@@ -8,6 +8,7 @@ import { GetUserRequestDto } from './dto/getuser.request.dto';
 import { AdminCreateUserRequestDto } from './dto/admincreateuser.request.dto';
 import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.request.dto';
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
+import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import {
   CognitoIdentityProviderClient,
   AdminInitiateAuthCommand,
@@ -227,6 +228,26 @@ export class AuthService {
 
     try {
       const command = new AdminCreateUserCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async adminDeleteUser(adminDeleteUser: AdminDeleteUserRequestDto) {
+    const params = {
+      UserPoolId: this.userPoolId,
+      Username: adminDeleteUser.email,
+    };
+
+    try {
+      const command = new AdminDeleteUserCommand(params);
       const response = await this.client.send(command);
       return response;
     } catch (error) {
