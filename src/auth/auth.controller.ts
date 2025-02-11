@@ -17,6 +17,7 @@ import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.r
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import { ListUsersRequestDto } from './dto/listusers.request.dto';
+import { RequireNewPasswordRequestDto } from './dto/requirenewpassword.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -90,6 +91,19 @@ export class AuthController {
   ) {
     try {
       return await this.authService.changePassword(changePasswordRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('require-new-password')
+  async forceChangePassword(
+    @Body() requireNewPasswordRequest: RequireNewPasswordRequestDto,
+  ) {
+    try {
+      return await this.authService.requireNewPassword(
+        requireNewPasswordRequest,
+      );
     } catch (e) {
       throw new BadRequestException(e.message);
     }

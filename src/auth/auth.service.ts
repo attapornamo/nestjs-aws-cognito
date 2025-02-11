@@ -10,9 +10,10 @@ import { ResendConfirmationCodeRequestDto } from './dto/resendconfirmationcode.r
 import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.request.dto';
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import { ListUsersRequestDto } from './dto/listusers.request.dto';
+import { RequireNewPasswordRequestDto } from './dto/requirenewpassword.request.dto';
 import {
   CognitoIdentityProviderClient,
-  AdminInitiateAuthCommand,
+  InitiateAuthCommand,
   SignUpCommand,
   ConfirmSignUpCommand,
   AdminDeleteUserCommand,
@@ -23,6 +24,7 @@ import {
   ResendConfirmationCodeCommand,
   ConfirmForgotPasswordCommand,
   ListUsersCommand,
+  RespondToAuthChallengeCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
 
@@ -49,15 +51,14 @@ export class AuthService {
       const secretHash = this.cognitoSecretHash(user.email);
 
       // Prepare the adminInitiateAuth command
-      const command = new AdminInitiateAuthCommand({
-        AuthFlow: 'ADMIN_NO_SRP_AUTH',
+      const command = new InitiateAuthCommand({
+        ClientId: this.clientId,
+        AuthFlow: 'USER_PASSWORD_AUTH',
         AuthParameters: {
           USERNAME: user.email,
           PASSWORD: user.password,
           SECRET_HASH: secretHash,
         },
-        ClientId: this.clientId,
-        UserPoolId: this.userPoolId,
       });
 
       // Send the command to AWS Cognito
@@ -224,6 +225,35 @@ export class AuthService {
     }
   }
 
+  async requireNewPassword(requireNewPassword: RequireNewPasswordRequestDto) {
+    // Generate the SECRET_HASH
+    const secretHash = this.cognitoSecretHash(requireNewPassword.email);
+
+    const params = {
+      ClientId: process.env.AWS_COGNITO_CLIENT_ID,
+      ChallengeName: 'NEW_PASSWORD_REQUIRED',
+      Session: requireNewPassword.session,
+      ChallengeResponses: {
+        USERNAME: requireNewPassword.email,
+        NEW_PASSWORD: requireNewPassword.password,
+        SECRET_HASH: secretHash,
+      },
+      ...({} as any),
+    };
+
+    try {
+      const command = new RespondToAuthChallengeCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
+      }
+
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async adminCreateUser(adminCreateUser: AdminCreateUserRequestDto) {
     const params = {
       UserPoolId: this.userPoolId,
@@ -316,7 +346,6 @@ export class AuthService {
     try {
       const command = new AdminDeleteUserCommand(params);
       await this.client.send(command);
-
       return true;
     } catch (error) {
       if (error.name !== '') {

@@ -211,6 +211,35 @@
 			"response": []
 		},
 		{
+			"name": "require-new-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"session\": \"\",\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/require-new-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"require-new-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "admin-create-user",
 			"request": {
 				"method": "POST",
